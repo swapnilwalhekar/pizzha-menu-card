@@ -1,38 +1,50 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import { pizzaData } from "./data";
 
 function App() {
   return (
     <div className="container">
       <Header />
-      <Menu />
+      <Menu pizzaData={pizzaData} />
       <Footer />
     </div>
   );
 }
+
 const Header = () => {
-  const style = {
-    color: "red",
-    fontSize: "45px",
-    textTransform: "uppercase",
-  };
   return (
     <header className="header">
-      <h1>Fast React Pizza Company.</h1>
+      <h1>Fast React Pizza Co.</h1>
     </header>
   );
 };
-const Menu = () => {
+
+const Menu = (props) => {
   return (
-    <div>
-      <Pizza />
-      <Pizza />
-      <Pizza />
-      <Pizza />
-    </div>
+    <main className="menu">
+      <h2>Our Menu</h2>
+      <Pizza data={props} />
+    </main>
   );
 };
+
+const Pizza = (props) => {
+  const storedPizzaData = props.data.pizzaData;
+  return (
+    <>
+      {storedPizzaData.map((item, index) => (
+        <div key={index}>
+          <img src={item.photoName} alt="not found" />
+          <h3>{item.name}</h3>
+          <p>{item.ingredients}</p>
+        </div>
+      ))}
+    </>
+  );
+};
+
 const Footer = () => {
   const hour = new Date().getHours();
   const openHour = 9;
@@ -46,17 +58,9 @@ const Footer = () => {
   // }
 
   return (
-    <footer>{new Date().toLocaleTimeString()}. We're currently open</footer>
-  );
-};
-
-const Pizza = () => {
-  return (
-    <div>
-      <img src="pizzas/spinaci.jpg" alt="not found" />
-      <h2>Pizza spinaci</h2>
-      <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-    </div>
+    <footer className="footer">
+      {new Date().toLocaleTimeString()}. We're currently open
+    </footer>
   );
 };
 
